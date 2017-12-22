@@ -229,7 +229,7 @@ class EqdskReader(Equilibrium):
             print(nw,nh)
             #extract time, units from timestring
             try:
-                time = re.findall('\d+',timestring)[0]
+                time = re.findall(r"[-+]?\d*\.\d+|\d+",timestring)[0]
                 tunits = timestring.split(time)[1]
                 timeConvertDict = {'ms':1./1000.,'s':1.}
                 self._time = scipy.array([float(time)*timeConvertDict[tunits]]) # returns time in seconds as array
@@ -2121,7 +2121,7 @@ class EqdskReader(Equilibrium):
         """
 
         unit_factor = self._getLengthConversionFactor(self._defaultUnits['_RCentr'], length_unit)
-        return unit_factor * self._RCentr.copy()
+        return unit_factor * self._RCentr
 
     def getEnergy(self):
         """Pulls EFIT stored energy, energy confinement time, injected power, 
